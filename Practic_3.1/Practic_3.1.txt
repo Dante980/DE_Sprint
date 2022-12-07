@@ -1,0 +1,23 @@
+hadoop fs -put /home/cloudera/Desktop/voyna-i-mir-tom-1.txt /user/cloudera
+hadoop fs -cat /user/cloudera/voyna-i-mir-tom-1.txt /user/cloudera/voyna-i-mir-tom-2.txt /user/cloudera/voyna-i-mir-tom-3.txt /user/cloudera/voyna-i-mir-tom-4.txt | hadoop  fs -put - /user/cloudera/test.txt
+hadoop fs -chmod -R 775 /user/cloudera/test.txt
+-rwxrwxr -x
+hadoop fs -ls test.txt
+-rwxrwxr -x
+hadoop fs -du -h /user/cloudera/test.txt
+2.9m 2.9m
+hadoop fs -setrep -w 3 /user/cloudera/test.txt
+2.9m 8.7m
+hadoop fs -cat /user/cloudera/test.txt | wc -l
+10272
+
+
+
+
+
+
+
+
+
+
+

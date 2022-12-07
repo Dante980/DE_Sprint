@@ -1,0 +1,54 @@
+﻿1)
+	SELECT fio, payment from workers, payment_lvl where workers.payment_lvl = payment_lvl.id_payment_lvl AND payment = (SELECT MAX(payment) from workers, payment_lvl)
+2)
+	SELECT fio from workers ORDER BY fio ASC
+3)
+	CREATE TABLE workers_lvls (
+		lvls_id bigserial not null primary key,
+		workers_lvl VARCHAR(50) not null);
+	INSERT INTO workers_lvls (workers_lvl) VALUES 
+		('lead'),
+		('senior'),
+		('middle'),
+		('june')
+	SELECT 
+		workers_lvls.workers_lvl, 
+		SUM(CAST(now() AS DATE)-work_start)/COUNT(workers_id) AS middle_staj 
+	from 
+		workers_lvls, 
+		workers 
+	where 
+		workers_lvls.lvls_id = workers.workers_lvl 
+   	GROUP by  workers_lvls.workers_lvl
+4)
+	SELECT 
+		fio, 
+		name_otdela 
+	from 
+		workers, 
+		otdeli 
+	where 
+		otdeli.id_otdela = workers.id_otdela 
+5)
+	SELECT name_otdela, fio, payment 
+	from 
+    	workers, 
+   		otdeli, 
+    	payment_lvl, 
+    	(SELECT 
+         	id_otdela, 
+         	MAX(payment)
+         from 
+         	workers, 
+         	payment_lvl 
+         WHERE 
+         	workers.payment_lvl = payment_lvl.id_payment_lvl 
+         GROUP BY id_otdela) as result1 
+	where 
+    	otdeli.id_otdela = workers.id_otdela 
+        AND 
+        workers.payment_lvl = payment_lvl.id_payment_lvl 
+        AND 
+        payment = result1.max 
+        AND 
+        workers.id_otdela = result1.id_otdela

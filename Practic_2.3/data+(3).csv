@@ -1,0 +1,73 @@
+﻿1)
+	CREATE TABLE workers (
+		workers_id bigserial not null primary key,
+		fio varchar(150) not null, 
+		Birthday date,
+		work_start date,
+		doljnost varchar(50) not null,
+		workers_lvl integer not null,
+		payment_lvl integer not null,
+		id_otdela integer not null,
+		have_rules boolean not null);
+	CREATE TABLE payment_lvl (
+		id_payment_lvl bigserial not null primary key,
+		payment integer);
+2)
+	CREATE TABLE otdeli (
+		id_otdela bigserial not null primary key,
+		name_otdela varchar(50) not null,
+		glavni_otdela INTEGER);
+3)
+	CREATE TABLE ocenki_per_qartal (
+		workers_id integer,
+		year_ integer,
+		quartal integer,
+		value_ varchar(1));
+4)
+	INSERT INTO otdeli (name_otdela) VALUES 
+		('отдел кибернетики'),
+		('отдел открытия банок');
+	INSERT INTO workers (fio, doljnost, workers_lvl, payment_lvl, id_otdela, have_rules, work_start) VALUES 
+		('Игнатов Игнат Игнатович', 'главный', 1, 1, 1, true, NOW()),
+		('Борисов Боирс Борисович', 'не главный, но программист', 2, 2, 1, true, NOW()),
+		('Сергеев Сергей Сергеевич', 'не главный, но программист', 3, 3, 1, true, NOW()),
+		('Аркадьев Аркадий Аркадьевич', 'главный', 2, 2, 2, true, NOW()),
+		('Попов Стив Иванович', 'заместитель главного', 4, 4, 2, false, NOW())
+5)
+	INSERT INTO otdeli (name_otdela) VALUES 
+		('отдел Интеллектуального анализа данных');
+	INSERT INTO workers (fio, doljnost, workers_lvl, payment_lvl, id_otdela, have_rules, work_start) VALUES 
+		('Антонов Антон Антонович', 'главный', 2, 2, 3, true, NOW()),
+		('Вениамининов Венимианин Вениаминов', 'не главный, но аналитик данных от природы', 2, 2, 3, true, NOW());
+6)
+	SELECT fio, CAST(now() AS DATE)-work_start AS staj FROM workers
+	SELECT fio, CAST(now() AS DATE)-work_start AS staj FROM workers LIMIT 3
+	SELECT workers_id FROM workers WHERE doljnost = 'водитель'
+	SELECT distinct(workers_id) from ocenki_per_qartal where value_ = 'D' OR value_ = 'E'
+
+/////////
+
+
+INSERT INTO ocenki_per_qartal (workers_id, year_, quartal, value_) VALUES 
+	(1, 2000, 1, 'E'),
+	(1, 2000, 2, 'B'),
+	(1, 2000, 3, 'A'),
+	(1, 2000, 4, 'A'),
+	(5, 2000, 1, 'E'),
+	(5, 2000, 2, 'E'),
+	(5, 2000, 3, 'E')
+	
+//////////
+
+	select MAX(payment) from payment_lvl
+
+/////////
+
+INSERT INTO payment_lvl (payment) VALUES 
+	(200000),
+	(20000),
+	(2000),
+	(200),
+	(20)
+
+/////////
